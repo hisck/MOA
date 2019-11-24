@@ -299,6 +299,14 @@ class node{
         }
         return valor;
     }
+
+    int Teste_Sucessor(node *sucessor){
+        if (sucessor->h == 0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 };
 
 int astar(int tabuleiro[4][4], int start, int end){
