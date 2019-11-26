@@ -132,11 +132,11 @@ void test_constructor(node test){
     printf("Y = %d\n", test.posY);
 }
 
-int calculate_heuristica1(int table[4][4], int final[4][4]){
+int calculate_heuristica1(int table[4][4]){
         int valor = 0;
         for(int i = 0; i< 4; i++){
             for(int j = 0; j < 4; j++){
-                if (table[i][j] != final[i][j]){
+                if (table[i][j] != ((4 * i) + j + 1)){
                     valor++;
                 }
             }
@@ -144,7 +144,7 @@ int calculate_heuristica1(int table[4][4], int final[4][4]){
         return valor;
 }
 
-int calculate_heuristica2(int table[4][4], int final[4][4]){
+int calculate_heuristica2(int table[4][4]){
         int valor = 0;
         int valor_pos_anterior = table[0][0];
         for(int i = 0; i < 4; i++){
@@ -159,13 +159,12 @@ int calculate_heuristica2(int table[4][4], int final[4][4]){
 
 int calculate_heuristica(int table[4][4], int choice){
     int value = 0;
-    int final[4][4] = {{1,2,3,4}, {5,6,7,8}, {9,10,11,12}, {13,14,15,0}};
     switch(choice){
         case 1:
-            value = calculate_heuristica1(table, final);
+            value = calculate_heuristica1(table);
             break;
         case 2:
-            value = calculate_heuristica2(table, final);
+            value = calculate_heuristica2(table);
             break;
     }
     return value;
@@ -223,9 +222,9 @@ int geraSucessores(node *pai, vector <node> *sucessores){
                     a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
                     b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x + 1
                     c = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
+                    sucessores->push_back(*a);
                     sucessores->push_back(*b);
                     sucessores->push_back(*c);
-                    sucessores->push_back(*a);
                     //deve ir em alguma estrutura para guardar sucessores
                     break;
                 case 3:
@@ -384,7 +383,7 @@ int astar(node *start, node *end, int heuristica){
     int pos = 0;
     //test_constructor(min);
     while(lista_aberta.size() > 0){
-        for(int i = 0; i < lista_aberta.size() ; i++){
+        for(unsigned int i = 0; i < lista_aberta.size() ; i++){
             int fmin = lista_aberta[0].f;
             if (fmin > lista_aberta[i].f){
                 pos = i;
@@ -398,8 +397,8 @@ int astar(node *start, node *end, int heuristica){
         lista_fechada.push_back(min);
         geraSucessores(&min, &sucessores);
         if(lista_aberta.size() != 0){
-            for(int i = 0; i < lista_aberta.size() ; i++){
-                for(int j = 0; j < sucessores.size(); j++){
+            for(unsigned int i = 0; i < lista_aberta.size() ; i++){
+                for(unsigned int j = 0; j < sucessores.size(); j++){
                     int is_equal = compare_tabuleiros(lista_aberta[i], sucessores[j]);
                     if(is_equal == 16){
                         if(sucessores[j].g < lista_aberta[i].g){
@@ -409,18 +408,42 @@ int astar(node *start, node *end, int heuristica){
                 }
             }
         }
-        for(int i = 0; i < sucessores.size() ; i++){
-            if(lista_fechada.size() != 0){
-                for(int j = 0; j < lista_fechada.size() ; j++){
-                    int equal = compare_tabuleiros(sucessores[i],lista_fechada[j]);
-                    if(equal < 16){
-                        sucessores[i].h = calculate_heuristica(sucessores[i].tabuleiro, heuristica);
-                        sucessores[i].f = sucessores[i].g + sucessores[i].h;
-                        lista_aberta.push_back(sucessores[i]);
+        for(unsigned int i = 0; i < sucessores.size() ; i++){
+            sucessores[i].h = calculate_heuristica(sucessores[i].tabuleiro, heuristica);
+            sucessores[i].f = sucessores[i].g + sucessores[i].h;
+            lista_aberta.push_back(sucessores[i]);
+        }
+        if(lista_fechada.size() != 0){
+            for(unsigned int i = 0; i < lista_fechada.size() ; i++){
+                for(unsigned int j = 0; j < sucessores.size(); j++){
+                    int is_equal = compare_tabuleiros(lista_fechada[i], sucessores[j]);
+                    if(is_equal == 16){
+                        if(sucessores[j].g < lista_aberta[i].g){
+                            lista_fechada.erase(lista_fechada.begin()+i);
+                        }
                     }
                 }
             }
-        }        
+        }
     }
     return min.g;
+}
+
+int main(){
+    int pos0[2];
+    int tab_inicial[4][4];
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            cin >> tab_inicial[i][j];
+            if(tab_inicial[i][j] == 0){
+                pos0[0] = i;
+                pos0[1] = j;
+            }
+        }
+    }
+    node *inicio = new node(tab_inicial, 0, 0, 0, 0, nullptr, pos0[0], pos0[1]);
+    int tab_final[4][4] = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 0}};
+    node *final = new node(tab_final, 0, 0, 0, 16, 0, 4, 4);
+    int valor = astar(inicio, final, 1);
+    printf("%d\n", valor);
 }

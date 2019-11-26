@@ -14,8 +14,9 @@ int main(){
             }
         }
     }*/
-    int tab_inicial[4][4] = {{5, 1, 2, 3}, {9,6,7,4}, {13,10,11,8}, {0,14,15,12}};
-    node *inicio = new node(tab_inicial, 0, 0, 0, 0, nullptr, 3, 0);
+    //2 3 0 8 1 5 4 7 9  6 10 12 13 14 11  15
+    int tab_inicial[4][4] = {{2, 3, 0, 8}, {1,5,4,7}, {9,6,10,12}, {13,14,11,15}};
+    node *inicio = new node(tab_inicial, 0, 0, 0, 0, nullptr, 0, 2);
     //test_constructor(*inicio);
     int tab_final[4][4] = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 0}};
     node *final = new node(tab_final, 0, 0, 0, 16, 0, 4, 4);
