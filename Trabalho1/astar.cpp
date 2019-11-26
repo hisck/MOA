@@ -108,6 +108,23 @@ class node{
 
 };
 
+void test_constructor(node test){
+    printf("-------TABULEIRO------\n");
+    for(int i = 0; i < 4; i++){
+        printf("|");
+        for(int j = 0; j< 4; j++){
+            printf(" %d ", test.tabuleiro[i][j]);
+        }
+        printf("|\n");
+    }
+    printf("G = %d\n", test.g);
+    printf("H = %d\n", test.h);
+    printf("F = %d\n", test.f);
+    printf("NUM_CORRETAS = %d\n", test.numerocorretas);
+    printf("X = %d\n", test.posX);
+    printf("Y = %d\n", test.posY);
+}
+
 int calculate_heuristica1(int table[4][4]){
         int valor = 0;
         for(int i = 0; i< 4; i++){
