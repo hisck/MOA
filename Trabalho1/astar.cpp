@@ -45,8 +45,12 @@ class node{
         int posX;
         int posY;
 
-    node(int *matriz[4][4], int g, int h, int f, int numerocorretas, node* father, int posX, int posY){
-        node::tabuleiro[4][4] = matriz[4][4];
+    node(int matriz[4][4], int g, int h, int f, int numerocorretas, node* father, int posX, int posY){
+        for (int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                node::tabuleiro[i][j] = matriz[i][j];
+            }
+        }
         node::g = g;
         node::h = h;
         node::f = f;
@@ -56,8 +60,12 @@ class node{
         node::posY = posY;
     }
 
-    node(int *matriz[4][4], int g, int h, int f, int numerocorretas, node* father, int posX, int posY, int decisao){
-        node::tabuleiro[4][4] = matriz[4][4];
+    node(int matriz[4][4], int g, int h, int f, int numerocorretas, node* father, int posX, int posY, int decisao){
+        for (int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                node::tabuleiro[i][j] = matriz[i][j];
+            }
+        }
         node::g = g;
         node::h = h;
         node::f = f;
