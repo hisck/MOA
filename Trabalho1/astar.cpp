@@ -45,176 +45,7 @@ class node{
         int posX;
         int posY;
 
-    node geraSucessores(node *pai, vector <node> *sucessores){
-        //new node(pai->tabuleiro, (pai->g + 1), 0, 0, pai->numerocorretas, pai);
-        //Gera sucessor deve pegar e calcular os valores de G e H para todos os possíveis sucessores. Dessa forma, ele escolhe uma das possibilidades
-        //Se estivermos nos extremos, temos dois sucessores
-        //Se estivermos numa linha extrema, sem ser nos extremos, temos 3 sucessores
-        //caso contrário, teremos 4 sucessores
-        //sucessores são guardados em um vector.
-        int posX = pai->posX;
-        int posY = pai->posY;
-
-        if(posX == 0){
-            switch(posY){
-                case 0:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y+1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x+1
-                    //deve ir em alguma estrutura para guardar sucessores
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    break;
-                case 1:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x + 1
-                    node *c = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    sucessores->push_back(*c);
-                    //deve ir em alguma estrutura para guardar sucessores
-                    break;
-                case 2:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x + 1
-                    node *c = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    sucessores->push_back(*c);
-                    //deve ir em alguma estrutura para guardar sucessores
-                    break;
-                case 3:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y-1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x+1
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    //deve ir em alguma estrutura para guardar sucessores
-                    break;
-            }
-        }else if(posX == 1){
-            switch(posY){
-                case 0:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y+1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x+1
-                    node *c = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    sucessores->push_back(*c);
-                    //deve ir em alguma estrutura para guardar sucessores
-                    break;
-                case 1:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x + 1
-                    node *c = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
-                    node *d = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    sucessores->push_back(*c);
-                    sucessores->push_back(*d);
-                    //deve ir em alguma estrutura para guardar sucessores
-                    break;
-                case 2:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x + 1
-                    node *c = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
-                    node *d = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
-                    //deve ir em alguma estrutura para guardar sucessores
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    sucessores->push_back(*c);
-                    sucessores->push_back(*d);
-                    break;
-                case 3:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y-1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x+1
-                    node *c = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    sucessores->push_back(*c);
-                    //deve ir em alguma estrutura para guardar sucessores
-                    break;
-            }                
-        }else if(posX == 2){
-            switch(posY){
-                case 0:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y+1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x+1
-                    node *c = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
-                    //deve ir em alguma estrutura para guardar sucessores
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    sucessores->push_back(*c);
-                    break;
-                case 1:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x + 1
-                    node *c = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
-                    node *d = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
-                    //deve ir em alguma estrutura para guardar sucessores
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    sucessores->push_back(*c);
-                    sucessores->push_back(*d);
-                    break;
-                case 2:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x + 1
-                    node *c = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
-                    node *d = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
-                    //deve ir em alguma estrutura para guardar sucessores
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    sucessores->push_back(*c);
-                    sucessores->push_back(*d);
-                    break;
-                case 3:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y-1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x+1
-                    node *c = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
-                    //deve ir em alguma estrutura para guardar sucessores
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    sucessores->push_back(*c);
-                    break;
-            }           
-        }else{
-            switch(posY){
-                case 0:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y+1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
-                    //deve ir em alguma estrutura para guardar sucessores
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    break;
-                case 1:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x - 1
-                    node *c = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
-                    //deve ir em alguma estrutura para guardar sucessores
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    sucessores->push_back(*c);
-                    break;
-                case 2:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x - 1
-                    node *c = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
-                    //deve ir em alguma estrutura para guardar sucessores
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    sucessores->push_back(*c);
-                    break;
-                case 3:
-                    node *a = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y-1
-                    node *b = new node(pai->tabuleiro, (pai->g + 1), calculate_heristica1(pai->tabuleiro), ((pai->g + 1) + calculate_heristica1(pai->tabuleiro)), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
-                    //deve ir em alguma estrutura para guardar sucessores
-                    sucessores->push_back(*a);
-                    sucessores->push_back(*b);
-                    break;
-            }
-        }
-    }
-
-    node::node(int matriz[4][4], int g, int h, int f, int numerocorretas, node* father, int posX, int posY){
+    node(int matriz[4][4], int g, int h, int f, int numerocorretas, node* father, int posX, int posY){
         node::tabuleiro[4][4] = matriz[4][4];
         node::g = g;
         node::h = h;
@@ -225,7 +56,7 @@ class node{
         node::posY = posY;
     }
 
-    node::node(int matriz[4][4], int g, int h, int f, int numerocorretas, node* father, int posX, int posY, int decisao){
+    node(int matriz[4][4], int g, int h, int f, int numerocorretas, node* father, int posX, int posY, int decisao){
         node::tabuleiro[4][4] = matriz[4][4];
         node::g = g;
         node::h = h;
@@ -275,7 +106,9 @@ class node{
         return table[4][4];
     }*/
 
-    int calculate_heristica1(int table[4][4]){
+};
+
+int calculate_heuristica1(int table[4][4]){
         int valor = 0;
         for(int i = 0; i< 4; i++){
             for(int j = 0; j < 4; j++){
@@ -285,9 +118,9 @@ class node{
             }
         }
         return valor;
-    }
+}
 
-    int calculate_heristica2(int table[4][4]){
+int calculate_heuristica2(int table[4][4]){
         int valor = 0;
         int valor_pos_anterior = table[0][0];
         for(int i = 0; i < 4; i++){
@@ -298,17 +131,254 @@ class node{
             }
         }
         return valor;
+}
+
+int calculate_heuristica(int table[4][4], int choice){
+    int value = 0;
+    switch(choice){
+        case 1:
+            value = calculate_heuristica1(table);
+            break;
+        case 2:
+            value = calculate_heuristica2(table);
+            break;
+    }
+    return value;
+}
+
+int geraSucessores(node *pai, vector <node> *sucessores){
+        //new node(pai->tabuleiro, (pai->g + 1), 0, 0, pai->numerocorretas, pai);
+        //Gera sucessor deve pegar e calcular os valores de G e H para todos os possíveis sucessores. Dessa forma, ele escolhe uma das possibilidades
+        //Se estivermos nos extremos, temos dois sucessores
+        //Se estivermos numa linha extrema, sem ser nos extremos, temos 3 sucessores
+        //caso contrário, teremos 4 sucessores
+        //sucessores são guardados em um vector.
+        int posX = pai->posX;
+        int posY = pai->posY;
+        node *a, *b, *c, *d;
+        if(posX == 0){
+            switch(posY){
+                case 0:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y+1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x+1
+                    //deve ir em alguma estrutura para guardar sucessores
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    break;
+                case 1:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x + 1
+                    c = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    sucessores->push_back(*c);
+                    //deve ir em alguma estrutura para guardar sucessores
+                    break;
+                case 2:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x + 1
+                    c = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    sucessores->push_back(*c);
+                    //deve ir em alguma estrutura para guardar sucessores
+                    break;
+                case 3:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y-1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x+1
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    //deve ir em alguma estrutura para guardar sucessores
+                    break;
+            }
+        }else if(posX == 1){
+            switch(posY){
+                case 0:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y+1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x+1
+                    c = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    sucessores->push_back(*c);
+                    //deve ir em alguma estrutura para guardar sucessores
+                    break;
+                case 1:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x + 1
+                    c = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
+                    d = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    sucessores->push_back(*c);
+                    sucessores->push_back(*d);
+                    //deve ir em alguma estrutura para guardar sucessores
+                    break;
+                case 2:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x + 1
+                    c = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
+                    d = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
+                    //deve ir em alguma estrutura para guardar sucessores
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    sucessores->push_back(*c);
+                    sucessores->push_back(*d);
+                    break;
+                case 3:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y-1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x+1
+                    c = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    sucessores->push_back(*c);
+                    //deve ir em alguma estrutura para guardar sucessores
+                    break;
+            }                
+        }else if(posX == 2){
+            switch(posY){
+                case 0:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y+1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x+1
+                    c = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
+                    //deve ir em alguma estrutura para guardar sucessores
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    sucessores->push_back(*c);
+                    break;
+                case 1:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x + 1
+                    c = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
+                    d = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
+                    //deve ir em alguma estrutura para guardar sucessores
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    sucessores->push_back(*c);
+                    sucessores->push_back(*d);
+                    break;
+                case 2:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x + 1
+                    c = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
+                    d = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
+                    //deve ir em alguma estrutura para guardar sucessores
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    sucessores->push_back(*c);
+                    sucessores->push_back(*d);
+                    break;
+                case 3:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y-1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX + 1), pai->posY, xmaisum);//x+1
+                    c = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
+                    //deve ir em alguma estrutura para guardar sucessores
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    sucessores->push_back(*c);
+                    break;
+            }           
+        }else{
+            switch(posY){
+                case 0:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y+1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
+                    //deve ir em alguma estrutura para guardar sucessores
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    break;
+                case 1:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x - 1
+                    c = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
+                    //deve ir em alguma estrutura para guardar sucessores
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    sucessores->push_back(*c);
+                    break;
+                case 2:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x - 1
+                    c = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y - 1
+                    //deve ir em alguma estrutura para guardar sucessores
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    sucessores->push_back(*c);
+                    break;
+                case 3:
+                    a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY - 1), ymenosum);//y-1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
+                    //deve ir em alguma estrutura para guardar sucessores
+                    sucessores->push_back(*a);
+                    sucessores->push_back(*b);
+                    break;
+            }
+        }
+        return 0;
     }
 
-    int Teste_Sucessor(node *sucessor){
-        if (sucessor->h == 0){
-            return 1;
-        }else{
-            return 0;
+void print_sucessores(vector <node> sucessores){
+    for(int i = 0; i < sucessores.size(); i++){
+        for(int j = 0; j < 4; j++){
+            printf("|");
+            for(int k = 0; k < 4; k++){
+                printf(" %d ", sucessores[i].tabuleiro[j][k]);
+            }printf("|\n");
         }
     }
-};
+}
 
-int astar(int tabuleiro[4][4], int start, int end){
+int compare_tabuleiros(node A, node B){
+    int value = 0;
+    for (int i = 0; i < 16; i++){
+        for (int j = 0; j < 16; j++){
+            if(A.tabuleiro[i][j] == B.tabuleiro[i][j]){
+                value++;
+            }
+        }
+    }
+    return value;
+}
 
+int astar(node *start, node *end, int heuristica){
+    vector<node> lista_aberta;
+    vector<node> lista_fechada;
+    vector<node> sucessores;
+    start->g = 0;
+    start->father = nullptr;
+    lista_aberta.push_back(*start);
+    node *min = new node(nullptr, 0, 0, 0, 0, nullptr, 0, 0);
+    int pos;
+    while(lista_aberta.size() > 0){
+        *min = lista_aberta[0];
+        for(int i = 0; i < lista_aberta.size() ; i++){
+            if (min->f > lista_aberta[i].f){
+                *min = lista_aberta[i];
+                pos = i;
+            }
+        }
+        if(compare_tabuleiros(lista_aberta[pos], *end) == 16){
+            break;
+        }
+        lista_aberta.erase(lista_aberta.begin()+pos);
+        lista_fechada.push_back(*min);
+        geraSucessores(min, &sucessores);
+        if(lista_aberta.size() != 0){
+            for(int i = 0; i < lista_aberta.size() ; i++){
+                for(int j = 0; j < sucessores.size(); j++){
+                    int is_equal = compare_tabuleiros(lista_aberta[i], sucessores[j]);
+                    if(is_equal == 16){
+                        if(sucessores[j].g < lista_aberta[i].g){
+                            lista_aberta.erase(lista_aberta.begin()+i);
+                        }
+                    }
+                }
+            }
+        }
+        for(int i = 0; i < sucessores.size() ; i++){
+            sucessores[i].h = calculate_heuristica(sucessores[i].tabuleiro, heuristica);
+            sucessores[i].f = sucessores[i].g + sucessores[i].h;
+            lista_aberta.push_back(sucessores[i]);
+        }
+    }
+    return min->g ;
 }
