@@ -319,13 +319,9 @@ int geraSucessores(node *pai, vector <node> *sucessores){
                 case 0:
                     a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y+1
                     b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
-                    test_constructor(*a);
-                    test_constructor(*b);
                     //deve ir em alguma estrutura para guardar sucessores
                     sucessores->push_back(*a);
                     sucessores->push_back(*b);
-                    printf("\nSize sucessores = %d\n", sucessores->size());
-                    print_sucessores(*sucessores);
                     break;
                 case 1:
                     a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
