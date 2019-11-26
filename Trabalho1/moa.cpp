@@ -21,8 +21,8 @@ int main(){
     node *final = new node(tab_final, 0, 0, 0, 16, 0, 4, 4);
     test_constructor(*final);
     vector<node> sucessores;
-    //geraSucessores(inicio, &sucessores);
-    //print_sucessores(sucessores);
+    geraSucessores(inicio, &sucessores);
+    print_sucessores(sucessores);
     //astar(inicio, final, 1);
 
 }
