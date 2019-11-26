@@ -77,28 +77,28 @@ class node{
         int modifica = 0;
         switch(decisao){
             case xmaisum:
-                zero = matriz[posX - 1][posY];
-                modifica = matriz[posX][posY];
-                matriz[posX][posY] = zero;
-                matriz[posX - 1][posY] = modifica;
+                zero = node::tabuleiro[posX - 1][posY];
+                modifica = node::tabuleiro[posX][posY];
+                node::tabuleiro[posX][posY] = zero;
+                node::tabuleiro[posX - 1][posY] = modifica;
                 break;
             case xmenosum:
-                zero = matriz[posX + 1][posY];
-                modifica = matriz[posX][posY];
-                matriz[posX][posY] = zero;
-                matriz[posX + 1][posY] = modifica;
+                zero = node::tabuleiro[posX + 1][posY];
+                modifica = node::tabuleiro[posX][posY];
+                node::tabuleiro[posX][posY] = zero;
+                node::tabuleiro[posX + 1][posY] = modifica;
                 break;
             case ymaisum:
-                zero = matriz[posX][posY - 1];
-                modifica = matriz[posX][posY];
-                matriz[posX][posY] = zero;
-                matriz[posX][posY - 1] = modifica;
+                zero = node::tabuleiro[posX][posY - 1];
+                modifica = node::tabuleiro[posX][posY];
+                node::tabuleiro[posX][posY] = zero;
+                node::tabuleiro[posX][posY - 1] = modifica;
                 break;
             case ymenosum:
-                zero = matriz[posX][posY + 1];
-                modifica = matriz[posX][posY];
-                matriz[posX][posY] = zero;
-                matriz[posX][posY + 1] = modifica;
+                zero = node::tabuleiro[posX][posY + 1];
+                modifica = node::tabuleiro[posX][posY];
+                node::tabuleiro[posX][posY] = zero;
+                node::tabuleiro[posX][posY + 1] = modifica;
                 break;
         }
     }
@@ -323,6 +323,7 @@ int geraSucessores(node *pai, vector <node> *sucessores){
                     //deve ir em alguma estrutura para guardar sucessores
                     sucessores->push_back(*a);
                     sucessores->push_back(*b);
+                    printf("\nSize sucessores = %d\n", sucessores.size());
                     print_sucessores(*sucessores);
                     break;
                 case 1:
