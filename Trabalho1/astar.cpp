@@ -173,6 +173,8 @@ int calculate_heuristica(int table[4][4], int choice){
 
 void print_sucessores(vector <node> sucessores){
     int tam = sucessores.size();
+    printf("\nNUM SUCESSORES = %d", tam);
+    printf("\n-------TABULEIRO------\n");
     for(int i = 0; i < tam ; i++){
         for(int j = 0; j < 4; j++){
             printf("|");
@@ -180,6 +182,12 @@ void print_sucessores(vector <node> sucessores){
                 printf(" %d ", sucessores[i].tabuleiro[j][k]);
             }printf("|\n");
         }
+        printf("G = %d\n", sucessores[i].g);
+        printf("H = %d\n", sucessores[i].h);
+        printf("F = %d\n", sucessores[i].f);
+        printf("NUM_CORRETAS = %d\n", sucessores[i].numerocorretas);
+        printf("X = %d\n", sucessores[i].posX);
+        printf("Y = %d\n", sucessores[i].posY);
     }
 }
 
@@ -318,7 +326,7 @@ int geraSucessores(node *pai, vector <node> *sucessores){
             switch(posY){
                 case 0:
                     a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y+1
-                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
+                    b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1 
                     //deve ir em alguma estrutura para guardar sucessores
                     sucessores->push_back(*a);
                     sucessores->push_back(*b);

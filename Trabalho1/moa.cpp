@@ -23,6 +23,6 @@ int main(){
     vector<node> sucessores;
     geraSucessores(inicio, &sucessores);
     print_sucessores(sucessores);
-    //astar(inicio, final, 1);
+    astar(inicio, final, 1);
 
 }
