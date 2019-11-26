@@ -171,6 +171,17 @@ int calculate_heuristica(int table[4][4], int choice){
     return value;
 }
 
+void print_sucessores(vector <node> sucessores){
+    for(int i = 0; i < sucessores.size(); i++){
+        for(int j = 0; j < 4; j++){
+            printf("|");
+            for(int k = 0; k < 4; k++){
+                printf(" %d ", sucessores[i].tabuleiro[j][k]);
+            }printf("|\n");
+        }
+    }
+}
+
 int geraSucessores(node *pai, vector <node> *sucessores){
         //new node(pai->tabuleiro, (pai->g + 1), 0, 0, pai->numerocorretas, pai);
         //Gera sucessor deve pegar e calcular os valores de G e H para todos os possíveis sucessores. Dessa forma, ele escolhe uma das possibilidades
@@ -307,9 +318,12 @@ int geraSucessores(node *pai, vector <node> *sucessores){
                 case 0:
                     a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y+1
                     b = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, (pai->posX - 1), pai->posY, xmenosum);//x-1
+                    test_constructor(*a);
+                    test_constructor(*b);
                     //deve ir em alguma estrutura para guardar sucessores
                     sucessores->push_back(*a);
                     sucessores->push_back(*b);
+                    print_sucessores(sucessores);
                     break;
                 case 1:
                     a = new node(pai->tabuleiro, (pai->g + 1), 0, ((pai->g + 1) + 0), pai->numerocorretas, pai, pai->posX, (pai->posY + 1), ymaisum);//y + 1
@@ -340,17 +354,6 @@ int geraSucessores(node *pai, vector <node> *sucessores){
         }
         return 0;
     }
-
-void print_sucessores(vector <node> sucessores){
-    for(int i = 0; i < sucessores.size(); i++){
-        for(int j = 0; j < 4; j++){
-            printf("|");
-            for(int k = 0; k < 4; k++){
-                printf(" %d ", sucessores[i].tabuleiro[j][k]);
-            }printf("|\n");
-        }
-    }
-}
 
 int compare_tabuleiros(node A, node B){
     int value = 0;
