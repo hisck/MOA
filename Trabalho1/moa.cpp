@@ -16,13 +16,13 @@ int main(){
     }*/
     int tab_inicial[4][4] = {{5, 1, 2, 3}, {9,6,7,4}, {13,10,11,8}, {0,14,15,12}};
     node *inicio = new node(tab_inicial, 0, 0, 0, 0, nullptr, 3, 0);
-    test_constructor(*inicio);
+    //test_constructor(*inicio);
     int tab_final[4][4] = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 0}};
     node *final = new node(tab_final, 0, 0, 0, 16, 0, 4, 4);
-    test_constructor(*final);
+    //test_constructor(*final);
     vector<node> sucessores;
-    geraSucessores(inicio, &sucessores);
-    print_sucessores(sucessores);
-    astar(inicio, final, 1);
-
+    //geraSucessores(inicio, &sucessores);
+    //print_sucessores(sucessores);
+    int valor = astar(inicio, final, 1);
+    printf("Valor = %d\n", valor);
 }

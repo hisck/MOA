@@ -128,7 +128,6 @@ void test_constructor(node test){
     printf("G = %d\n", test.g);
     printf("H = %d\n", test.h);
     printf("F = %d\n", test.f);
-    printf("NUM_CORRETAS = %d\n", test.numerocorretas);
     printf("X = %d\n", test.posX);
     printf("Y = %d\n", test.posY);
 }
@@ -137,7 +136,7 @@ int calculate_heuristica1(int table[4][4]){
         int valor = 0;
         for(int i = 0; i< 4; i++){
             for(int j = 0; j < 4; j++){
-                if (table[i][j] != ((1 * i) + j + 1)){
+                if (table[i][j] != ((4 * i) + j + 1)){
                     valor++;
                 }
             }
@@ -363,8 +362,8 @@ int geraSucessores(node *pai, vector <node> *sucessores){
 
 int compare_tabuleiros(node A, node B){
     int value = 0;
-    for (int i = 0; i < 16; i++){
-        for (int j = 0; j < 16; j++){
+    for (int i = 0; i < 4; i++){
+        for (int j = 0; j < 4; j++){
             if(A.tabuleiro[i][j] == B.tabuleiro[i][j]){
                 value++;
             }
@@ -380,22 +379,23 @@ int astar(node *start, node *end, int heuristica){
     start->g = 0;
     start->father = nullptr;
     lista_aberta.push_back(*start);
-    node *min = new node(nullptr, 0, 0, 0, 0, nullptr, 0, 0);
-    int pos;
+    node min = lista_aberta[0];
+    int pos = 0;
+    //test_constructor(min);
     while(lista_aberta.size() > 0){
-        *min = lista_aberta[0];
         for(int i = 0; i < lista_aberta.size() ; i++){
-            if (min->f > lista_aberta[i].f){
-                *min = lista_aberta[i];
+            int fmin = lista_aberta[0].f;
+            if (fmin > lista_aberta[i].f){
                 pos = i;
             }
         }
-        if(compare_tabuleiros(lista_aberta[pos], *end) == 16){
-            break;
-        }
+        min = lista_aberta[pos];
+        test_constructor(min);
+        int equal_end = compare_tabuleiros(lista_aberta[pos], *end);
+        if(equal_end == 16) break;
         lista_aberta.erase(lista_aberta.begin()+pos);
-        lista_fechada.push_back(*min);
-        geraSucessores(min, &sucessores);
+        lista_fechada.push_back(min);
+        geraSucessores(&min, &sucessores);
         if(lista_aberta.size() != 0){
             for(int i = 0; i < lista_aberta.size() ; i++){
                 for(int j = 0; j < sucessores.size(); j++){
@@ -413,6 +413,18 @@ int astar(node *start, node *end, int heuristica){
             sucessores[i].f = sucessores[i].g + sucessores[i].h;
             lista_aberta.push_back(sucessores[i]);
         }
+        if(lista_fechada.size() != 0){
+            for(int i = 0; i < lista_fechada.size() ; i++){
+                for(int j = 0; j < sucessores.size(); j++){
+                    int is_equal = compare_tabuleiros(lista_fechada[i], sucessores[j]);
+                    if(is_equal == 16){
+                        if(sucessores[j].g < lista_aberta[i].g){
+                            lista_fechada.erase(lista_fechada.begin()+i);
+                        }
+                    }
+                }
+            }
+        }
     }
-    return min->g ;
+    return min.g;
 }
