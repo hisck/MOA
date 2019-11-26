@@ -323,7 +323,7 @@ int geraSucessores(node *pai, vector <node> *sucessores){
                     //deve ir em alguma estrutura para guardar sucessores
                     sucessores->push_back(*a);
                     sucessores->push_back(*b);
-                    printf("\nSize sucessores = %d\n", sucessores.size());
+                    printf("\nSize sucessores = %d\n", sucessores->size());
                     print_sucessores(*sucessores);
                     break;
                 case 1:
