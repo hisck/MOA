@@ -172,7 +172,7 @@ int calculate_heuristica(int table[4][4], int choice){
 }
 
 void print_sucessores(vector <node> sucessores){
-    for(int i = 0; i < sucessores.size(); i++){
+    for(int i = 0; i != sucessores.end(); i++){
         for(int j = 0; j < 4; j++){
             printf("|");
             for(int k = 0; k < 4; k++){
