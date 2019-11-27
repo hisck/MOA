@@ -411,26 +411,13 @@ int astar(node *start, node *end, int heuristica){
         }
         for(int i = 0; i < sucessores.size() ; i++){
             if(lista_fechada.size() != 0){
-                bool inserir = true;
-                while(inserir == true){
-                    for(int j = 0; j < lista_fechada.size() ; j++){
-                        int equal = compare_tabuleiros(sucessores[i],lista_fechada[j]);
-                        if(equal == 16){
-                            inserir = false;
-                            break;
-                        }
-                    }for(int k = 0; k < lista_aberta.size() ; k++){
-                        int equal = compare_tabuleiros(sucessores[i],lista_aberta[k]);
-                        if(equal == 16){
-                            inserir = false;
-                            break;
-                        }
+                for(int j = 0; j < lista_fechada.size() ; j++){
+                    int equal = compare_tabuleiros(sucessores[i],lista_fechada[j]);
+                    if(equal < 16){
+                        sucessores[i].h = calculate_heuristica(sucessores[i].tabuleiro, heuristica);
+                        sucessores[i].f = sucessores[i].g + sucessores[i].h;
+                        lista_aberta.push_back(sucessores[i]);
                     }
-                }
-                if(inserir == true){
-                    sucessores[i].h = calculate_heuristica(sucessores[i].tabuleiro, heuristica);
-                    sucessores[i].f = sucessores[i].g + sucessores[i].h;
-                    lista_aberta.push_back(sucessores[i]);
                 }
             }
         }        
