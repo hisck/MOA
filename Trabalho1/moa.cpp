@@ -1,6 +1,6 @@
 //#include "astar.cpp"
 #include <iostream>
-#include "astar2.cpp"
+#include "astar.cpp"
 
 int main(){
     printf("---INICIEI O PROGRAMA----");
@@ -19,14 +19,14 @@ int main(){
     int tab_inicial[4][4] = {{2, 3, 0, 8}, {1,5,4,7}, {9,6,10,12}, {13,14,11,15}};
     int tab_final[4][4] = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 0}};
     int posXY[2] = {0, 2};
-    node *inicio = new node(tab_inicial, 0, calculate_heuristica1(tab_inicial, tab_final), 0, nullptr, posXY);
+    node *inicio = new node(tab_inicial, 0, calculate_heuristica1(tab_inicial, tab_final), 0, 0, nullptr, posXY[0], posXY[1]);
     //test_constructor(*inicio);
     int posXY_final[2] = {3 , 3};
-    node *final = new node(tab_final, 0, 0, 0, nullptr, posXY_final);
+    node *final = new node(tab_final, 0, 0, 0, 0,  nullptr, posXY_final[0], posXY_final[1]);
     //test_constructor(*final);
     vector<node> sucessores;
-    geraSucessores(inicio, &sucessores, 1);
+    geraSucessores(inicio, &sucessores);
     print_sucessores(sucessores);
-    int valor = aestrela(inicio, final, 1);
+    int valor = astar(inicio, final, 1);
     printf("Valor = %d\n", valor);
 }
