@@ -194,6 +194,8 @@ int aestrela(node *start, node *end, int heuristica){
     vector<node>lista_aberta;
     vector<node>lista_fechada;
     vector<node>sucessores;
+    start->g = 0;
+    start->father = nullptr;
     lista_aberta.push_back(*start);
     node v = *start;
     while(compare_tabuleiros(v, *end) < 16){
