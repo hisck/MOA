@@ -24,9 +24,9 @@ int main(){
     int posXY_final[2] = {3 , 3};
     node *final = new node(tab_final, 0, 0, 0, nullptr, posXY_final);
     //test_constructor(*final);
-    //vector<node> sucessores;
-    //geraSucessores(inicio, &sucessores, 1);
-    //print_sucessores(sucessores);
+    vector<node> sucessores;
+    geraSucessores(inicio, &sucessores, 1);
+    print_sucessores(sucessores);
     int valor = aestrela(inicio, final, 1);
     printf("Valor = %d\n", valor);
 }
