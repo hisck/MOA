@@ -3,7 +3,7 @@ import copy
 
 final_config = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 0]]
 
-##################### Modelagem pra organizar o tabuleiro #####################
+##################### Modelagem do tabuleiro #####################
 
 
 class inputAStar:
@@ -75,6 +75,29 @@ def h_linha_1(start):
         foraDoLugar += 1
   return foraDoLugar
 
+
+def h_linha_2(start):
+  foraDoLugar = 0
+  for i in enumerate(start):
+    for j in range(len(i)):
+      if(i[j+1] != i[j] + 1 ):
+        foraDoLugar += 1
+  return foraDoLugar
+
+def h_linha_3(start):
+  soma = 0
+  for i in range(4):
+    for j in range(4):
+      if(start[i][j] == 0):
+        soma += 3-i + 3-j
+      else:
+        i0 = (start[i][j] - 1) // 4
+        j0 = (start[i][j] - 1) % 4
+        soma += abs(i - i0) + abs(j - j0)
+  return soma
+
+def h_linha_5(start):
+  return max(h_linha_1(start), h_linha_2(start), h_linha_3(start))
 ##################### Principal #####################
 
 
