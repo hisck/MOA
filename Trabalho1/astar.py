@@ -1,14 +1,11 @@
 import heapq
 import copy
 
-final_config = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 0]]
-
-##################### Modelagem do tabuleiro #####################
-
+tab_final = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 0]]
 
 class inputAStar:
   def __init__(self, matriz, pai, sucessores, g, h):
-    self.matriz = copy.deepcopy(matriz)
+    self.tabuleiro = copy.deepcopy(matriz)
     self.g = g
     self.h = h
     self.pai = pai
@@ -20,11 +17,9 @@ class inputAStar:
   def add_sucessor(self, sucessor):
     self.sucessores.append(sucessor)
 
-##################### Geração de sucessores #####################
 
-
-def geraSucessores(no):
-  matriz = copy.deepcopy(no.matriz)
+def geraSucessores(node):
+  matriz = copy.deepcopy(node.tabuleiro)
   i = j = 0
   while (True):
     if (j == 4):
@@ -35,87 +30,89 @@ def geraSucessores(no):
     else:
       j += 1
   if(i > 0):
-    up = copy.deepcopy(matriz)
-    up[i][j], up[i-1][j] = up[i-1][j], up[i][j]
-    no.add_sucessor(inputAStar(up, [], [], no.g + 1, 0))
+    cima = copy.deepcopy(matriz)
+    temp = cima[i][j]
+    cima[i][j] = cima[i-1][j]
+    cima[i-1][j] = temp
+    node.add_sucessor(inputAStar(cima, [], [], node.g + 1, 0))
   if(j > 0):
-    left = copy.deepcopy(no.matriz)
-    left[i][j], left[i][j-1] = left[i][j-1], left[i][j]
-    no.add_sucessor(inputAStar(left, [], [], no.g + 1, 0))
+    esquerda = copy.deepcopy(node.matriz)
+    temp = esquerda[i][j]
+    esquerda[i][j] = esquerda[i][j-1]
+    esquerda[i][j-1] = temp 
+    node.add_sucessor(inputAStar(esquerda, [], [], node.g + 1, 0))
   if(i < 3):
-    down = copy.deepcopy(no.matriz)
-    down[i][j], down[i+1][j] = down[i+1][j], down[i][j]
-    no.add_sucessor(inputAStar(down, [], [], no.g + 1, 0))
+    baixo = copy.deepcopy(node.matriz)
+    temp = baixo[i][j]
+    baixo[i][j] = baixo[i+1][j]
+    baixo[i+1][j] = temp
+    node.add_sucessor(inputAStar(baixo, [], [], node.g + 1, 0))
   if(j < 3):
-    right = copy.deepcopy(no.matriz)
-    right[i][j], right[i][j+1] = right[i][j+1], right[i][j]
-    no.add_sucessor(inputAStar(right, [], [], no.g + 1, 0))
-
-    ##################### Trata a entrada e monta o tabuleiro #####################
+    direita = copy.deepcopy(node.matriz)
+    temp = direita[i][j]
+    direita[i][j] = direita[i][j+1]
+    direita[i][j+1] = temp
+    node.add_sucessor(inputAStar(direita, [], [], node.g + 1, 0))
 
 
 def montaTabuleiro(entrada):
-  lido = input().split(' ')
-  lido = [num for num in lido if num]
+  read = input().split(' ')
+  read = [num for num in read if num]
   k = 0
 
   for i in range(0, 4):
     for j in range(0, 4):
-      entrada[i][j] = int(lido[k])
+      entrada[i][j] = int(read[k])
       k += 1
 
-##################### Heurísticas #####################
 
-
-def h_linha_1(start):
+def h1(tabuleiro):
   foraDoLugar = 0
-  for (indice, i) in enumerate(start):
+  for (indice, i) in enumerate(tabuleiro):
     for j in range(len(i)):
-      if (i[j] != final_config[indice][j]):
+      if (i[j] != tab_final[indice][j]):
         foraDoLugar += 1
   return foraDoLugar
 
-
-def h_linha_2(start):
+def h2(tabuleiro):
   foraDoLugar = 0
-  for i in enumerate(start):
+  for i in enumerate(tabuleiro):
     for j in range(len(i)):
       if(i[j+1] != i[j] + 1 ):
         foraDoLugar += 1
   return foraDoLugar
 
-def h_linha_3(start):
+def h3(tabuleiro):
   soma = 0
   for i in range(4):
     for j in range(4):
-      if(start[i][j] == 0):
+      if(tabuleiro[i][j] == 0):
         soma += 3-i + 3-j
       else:
-        i0 = (start[i][j] - 1) // 4
-        j0 = (start[i][j] - 1) % 4
+        i0 = (tabuleiro[i][j] - 1) // 4
+        j0 = (tabuleiro[i][j] - 1) % 4
         soma += abs(i - i0) + abs(j - j0)
   return soma
 
-def h_linha_5(start):
-  return max(h_linha_1(start), h_linha_2(start), h_linha_3(start))
-##################### Principal #####################
+def h5(tabuleiro):
+  return max(h1(tabuleiro), h2(tabuleiro), h3(tabuleiro))
 
 
-def astar(start):
-  T = str(final_config)
+def astar(tabuleiro):
+  T = str(tab_final)
   A = F = {}
-  h = []
-  A[str(start)] = inputAStar(start, [], [], 0, h_linha_1(start))
-  heapq.heappush(h, (A[str(start)].f(), str(start))) #adiciona pro heap h o F do start, e o tabuleiro inicial
-  v = A[str(start)]
-  while A and (str(v.matriz) != T):
+  heap = []
+  A[str(tabuleiro)] = inputAStar(tabuleiro, [], [], 0, h1(tabuleiro))
+  heapq.heappush(heap, (A[str(tabuleiro)].f(), str(tabuleiro))) #adiciona pro heap heap o F do tabuleiro, e o tabuleiro inicial
+  v = A[str(tabuleiro)]
+  while A and (str(v.tabuleiro) != T):
     while True:
-      posicao = heapq.heappop(h)
+      posicao = heapq.heappop(heap)
       if (posicao[1] in A):
         break
     v = A.get(posicao[1])
-    A.pop(str(v.matriz))
-    F[str(v.matriz)] = v
+    A.pop(str(v.tabuleiro))
+    F[str(v.tabuleiro)] = v
     if not v.sucessores:
       geraSucessores(v)
     m = v.sucessores
@@ -124,17 +121,17 @@ def astar(start):
       if(m_linha in A and m[i].g < A[m_linha].g):
         A.pop(m_linha)
       if(m_linha not in A and m_linha not in F):
-        A[str(m[i].matriz)] = m[i]
-        A[str(m[i].matriz)].pai = v
-        A[str(m[i].matriz)].h = h_linha_1(m[i].matriz)
-        heapq.heappush(h, (A[str(m[i].matriz)].f(), str(m[i].matriz)))
+        A[str(m[i].tabuleiro)] = m[i]
+        A[str(m[i].tabuleiro)].pai = v
+        A[str(m[i].tabuleiro)].h = h1(m[i].matriz)
+        heapq.heappush(heap, (A[str(m[i].tabuleiro)].f(), str(m[i].tabuleiro)))
   return v.g
 
 
 def main():
-  entrada = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
-  montaTabuleiro(entrada)
-  print(astar(entrada))
+  inicial = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+  montaTabuleiro(inicial)
+  print(astar(inicial))
 
 
 if __name__ == '__main__':
