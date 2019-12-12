@@ -100,17 +100,18 @@ def h5(tabuleiro):
 
 def astar(tabuleiro):
   T = str(tab_final)
-  A = F = {}
+  A = {}
+  F = {}
   heap = []
-  A[str(tabuleiro)] = inputAStar(tabuleiro, [], [], 0, h1(tabuleiro))
+  A[str(tabuleiro)] = inputAStar(tabuleiro, [], [], 0, h3(tabuleiro))
   heapq.heappush(heap, (A[str(tabuleiro)].f(), str(tabuleiro))) #adiciona pro heap heap o F do tabuleiro, e o tabuleiro inicial
   v = A[str(tabuleiro)]
   while A and (str(v.tabuleiro) != T):
     while True:
-      posicao = heapq.heappop(heap)
-      if (posicao[1] in A):
+      pos = heapq.heappop(heap)
+      if (pos[1] in A):
         break
-    v = A.get(posicao[1])
+    v = A.get(pos[1])
     A.pop(str(v.tabuleiro))
     F[str(v.tabuleiro)] = v
     if not v.sucessores:
@@ -123,7 +124,7 @@ def astar(tabuleiro):
       if(m_linha not in A and m_linha not in F):
         A[str(m[i].tabuleiro)] = m[i]
         A[str(m[i].tabuleiro)].pai = v
-        A[str(m[i].tabuleiro)].h = h1(m[i].matriz)
+        A[str(m[i].tabuleiro)].h = h3(m[i].matriz)
         heapq.heappush(heap, (A[str(m[i].tabuleiro)].f(), str(m[i].tabuleiro)))
   return v.g
 
